@@ -1,6 +1,8 @@
 stale_minor:
     stale_days: 180
     warning_days: 7
-    label: "stale-minor"
-    comment: 'This issue (and any of its Sub-Tasks) has not been updated for {stale_days} days. So, it has been labeled "{label}". If you are still affected by this bug or are still interested in this issue, please give an update and remove the label. In {warning_days} days the issue will be closed automatically.'
+    warning_label: "stale-minor"
+    warning_comment: 'This issue and all of its Sub-Tasks have not been updated for {stale_days} days. So, it has been labeled "{warning_label}". If you are still affected by this bug or are still interested in this issue, please give an update and remove the label. In {warning_days} days the issue will be closed automatically.'
+    done_label: "auto-closed"
+    done_comment: 'This issue has been labeled "{warning_label}" for {warning_days} days. It is closed now. If you are still affected by this or would like to raise the priority of this ticket please re-open, removing the label "{done_label}" and raise the ticket priority accordingly.'
 

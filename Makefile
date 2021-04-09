@@ -11,6 +11,12 @@ $(VENV)/bin/activate: requirements.txt
 # venv is a shortcut target
 venv: $(VENV)/bin/activate
 
+help: venv
+	./$(VENV)/bin/python3 flink_jira_bot.py --help
+
+dry-run: venv
+	./$(VENV)/bin/python3 flink_jira_bot.py -d
+
 run: venv
 	./$(VENV)/bin/python3 flink_jira_bot.py
 
