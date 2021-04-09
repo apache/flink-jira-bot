@@ -17,6 +17,9 @@ run: venv
 format: venv
 	./$(VENV)/bin/python3 -m black .
 
+freeze: venv
+	./$(VENV)/bin/pip freeze > requirements.txt
+
 clean:
 	rm -rf $(VENV)
 	find . -type f -name '*.pyc' -delete
