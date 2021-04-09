@@ -4,12 +4,14 @@ black @ git+git://github.com/psf/black@e114ef5514e95cb9908b38c2397978f2070c1b0e
 certifi==2020.12.5
 chardet==4.0.0
 click==7.1.2
+confuse==1.4.0
 Deprecated==1.2.12
 idna==2.10
 mypy-extensions==0.4.3
 oauthlib==3.1.0
 pathspec==0.8.1
 pycparser==2.20
+PyYAML==5.4.1
 regex==2021.4.4
 requests==2.25.1
 requests-oauthlib==1.3.0
