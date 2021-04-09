@@ -12,7 +12,7 @@ $(VENV)/bin/activate: requirements.txt
 venv: $(VENV)/bin/activate
 
 run: venv
-	./$(VENV)/bin/python3 flink_jira_bot/flink_jira_bot.py
+	./$(VENV)/bin/python3 flink_jira_bot.py
 
 format: venv
 	./$(VENV)/bin/python3 -m black .
