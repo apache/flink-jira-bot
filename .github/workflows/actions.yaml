@@ -2,7 +2,7 @@ name: Run Flink Jira Bot Hourly
 
 on:
   schedule:
-      - cron: 0 * * * *
+      - cron: 33 9,21 * * *
 jobs:
   run:
     env:
@@ -22,4 +22,4 @@ jobs:
           pip install -r requirements.txt
       - name: Run Jira Bot
         run: |
-          python flink_jira_bot.py
+          python flink_jira_bot.py -d
