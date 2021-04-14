@@ -1,4 +1,4 @@
-name: Run Flink Jira Bot Hourly
+name: Run Flink Jira Twice Daily
 
 on:
   schedule:
