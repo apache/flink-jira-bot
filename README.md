@@ -42,11 +42,13 @@ The configuration of the rules can be found in [config.yaml](config.yaml).
 
 ### Rule 1 (not implemented yet)
 
-### Rule 2 (not implemented yet)
+### Rule 2: Unassign Stale Assigned Tickets
 
-### Rule 3
+Assigned tickets without an update for {stale_assigned.stale_days} are unassigned after a warning period of {stale_assigned.warning_days}. Before this happens the assignee is notified that this is about to happen and asked for an update on the status of her contribution.
 
-An unresolved Minor ticket without an update for {stale.minor.stale_days} is closed after a warning period of {stale.minor.warning_days} with a comment that encourages users to watch, comment and simply reopen with a higher priority if the problem insists.
+### Rule 3: Close Stale Minor Tickets
+
+An unresolved Minor ticket without an update for {stale_minor.stale_days} is closed after a warning period of {stale_minor.warning_days} with a comment that encourages users to watch, comment and simply reopen with a higher priority if the problem insists.
 
 ## About Apache Flink
 
