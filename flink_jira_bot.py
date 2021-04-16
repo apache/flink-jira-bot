@@ -107,6 +107,12 @@ class FlinkJiraRule:
 
 
 class Rule3(FlinkJiraRule):
+    """
+    An unresolved Minor ticket without an update for {stale_minor.stale_days} is closed after a warning period of
+    {stale_minor.warning_days} with a comment that encourages users to watch, comment and simply reopen with a higher
+    priority if the problem insists.
+    """
+    
     def __init__(self, jira_client, config, is_dry_run):
         super().__init__(jira_client, config, is_dry_run)
         self.stale_days = config["stale_minor"]["stale_days"].get()
@@ -181,6 +187,12 @@ class Rule3(FlinkJiraRule):
 
 
 class Rule2(FlinkJiraRule):
+    """
+    Assigned tickets without an update for {stale_assigned.stale_days} are unassigned after a warning period of
+    {stale_assigned.warning_days}. Before this happens the assignee is notified that this is about to happen and
+    asked for an update on the status of her contribution.
+    """
+
     def __init__(self, jira_client, config, is_dry_run):
         super().__init__(jira_client, config, is_dry_run)
         self.stale_days = config["stale_assigned"]["stale_days"].get()
