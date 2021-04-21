@@ -32,3 +32,26 @@ stale_minor:
     done_label: "auto-closed"
     done_comment: 'This issue has been labeled "{warning_label}" for {warning_days} days. It is closed now. If you are still affected by this or would like to raise the priority of this ticket please re-open, removing the label "{done_label}" and raise the ticket priority accordingly.'
 
+stale_blocker:
+    stale_days: 1
+    warning_days: 7
+    warning_label: "stale-blocker"
+    warning_comment: 'This Blockers is unassigned and itself and all of its Sub-Tasks have not been updated for {stale_days} days. So, it has been labeled "{warning_label}". If this ticket is a Blocker, please either assign yourself or give an update. Afterwards, please remove the label. In {warning_days} days the issue will be deprioritized.'
+    done_label: "auto-deprioritized-blocker"
+    done_comment: 'This issue has been labeled "{warning_label}" for {warning_days} days. It is deprioritized now. If this ticket is actually a Blocker, please raise the ticket priority again and assign yourself or revive the public discussion.'
+
+stale_critical:
+    stale_days: 7
+    warning_days: 7
+    warning_label: "stale-critical"
+    warning_comment: 'This critical issue is unassigned and itself and all of its Sub-Tasks have not been updated for {stale_days} days. So, it has been labeled "{warning_label}". If this ticket is indeed critical, please either assign yourself or give an update. Afterwards, please remove the label. In {warning_days} days the issue will be deprioritized.'
+    done_label: "auto-deprioritized-critical"
+    done_comment: 'This issue has been labeled "{warning_label}" for {warning_days} days. It is deprioritized now. If this ticket is actually critical, please raise the ticket priority again and assign yourself or revive the public discussion.'
+
+stale_major:
+    stale_days: 30
+    warning_days: 7
+    warning_label: "stale-major"
+    warning_comment: 'This major issue is unassigned and itself and all of its Sub-Tasks have not been updated for {stale_days} days. So, it has been labeled "{warning_label}". If this ticket is indeed "major", please either assign yourself or give an update. Afterwards, please remove the label. In {warning_days} days the issue will be deprioritized.'
+    done_label: "auto-deprioritized-major"
+    done_comment: 'This issue has been labeled "{warning_label}" for {warning_days} days. It is deprioritized now. If this ticket is actually "major", please raise the ticket priority again and assign yourself or revive the public discussion.'

@@ -24,6 +24,7 @@ from argparse import ArgumentParser
 from pathlib import Path
 
 from stale_assigned_rule import StaleAssignedRule
+from stale_major_or_above_rule import StaleMajorOrAboveRule
 from stale_minor_rule import StaleMinorRule
 
 
@@ -63,5 +64,17 @@ if __name__ == "__main__":
 
     stale_assigned_rule = StaleAssignedRule(jira, jira_bot_config, args.dryrun)
     stale_minor_rule = StaleMinorRule(jira, jira_bot_config, args.dryrun)
+    stale_major_rule = StaleMajorOrAboveRule(
+        jira, jira_bot_config, args.dryrun, "Major"
+    )
+    stale_critical_rule = StaleMajorOrAboveRule(
+        jira, jira_bot_config, args.dryrun, "Critical"
+    )
+    stale_blocker_rule = StaleMajorOrAboveRule(
+        jira, jira_bot_config, args.dryrun, "Blocker"
+    )
     stale_assigned_rule.run()
     stale_minor_rule.run()
+    stale_major_rule.run()
+    stale_critical_rule.run()
+    stale_blocker_rule.run()

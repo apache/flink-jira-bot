@@ -98,6 +98,13 @@ class FlinkJiraRule:
         else:
             logging.info(f"DRY_RUN (({key})): Unassigning.")
 
+    def set_priority(self, key, priority):
+        if not self.is_dry_run:
+            fields = {"priority": {"name": priority}}
+            self.jira_client.update_issue_field(key, fields)
+        else:
+            logging.info(f"DRY_RUN (({key})): Setting to {priority}")
+
     @abc.abstractmethod
     def run(self):
         return
