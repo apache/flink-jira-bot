@@ -32,35 +32,14 @@ class StaleAssignedRule(FlinkJiraRule):
         super().__init__(jira_client, config, is_dry_run)
 
     def run(self):
-        self.unassign_tickets_marked_stale()
+        self.handle_tickets_marked_stale(
+            f"project=FLINK AND resolution = Unresolved AND labels in "
+            f'("{self.warning_label}") AND updated < startOfDay(-{self.warning_days}d)'
+        )
         self.mark_stale_tickets_stale(
             f"project = FLINK AND resolution = Unresolved AND assignee is not EMPTY "
             f"AND updated < startOfDay(-{self.stale_days}d)"
         )
 
-    def unassign_tickets_marked_stale(self):
-
-        assigned_tickets_marked_stale = (
-            f"project=FLINK AND resolution = Unresolved AND labels in "
-            f'("{self.warning_label}") AND updated < startOfDay(-{self.warning_days}d)'
-        )
-        logging.info(
-            f"Looking for assigned tickets, which were previously marked as {self.warning_label}."
-        )
-        issues = self.get_issues(assigned_tickets_marked_stale)
-
-        for issue in issues:
-            key = issue["key"]
-            logging.info(
-                f"Found https://issues.apache.org/jira/browse/{key}. It is now unassigned due to inactivity."
-            )
-
-            formatted_comment = self.done_comment.format(
-                warning_days=self.warning_days,
-                warning_label=self.warning_label,
-                done_label=self.done_label,
-            )
-
-            self.add_comment(key, formatted_comment)
-            self.replace_label(issue, self.warning_label, self.done_label)
-            self.unassign(key)
+    def handle_stale_ticket(self, key):
+        self.unassign(key)

@@ -114,6 +114,10 @@ class FlinkJiraRule:
     def run(self):
         return
 
+    @abc.abstractmethod
+    def handle_stale_ticket(self, key):
+        return
+
     def mark_stale_tickets_stale(self, jql_query):
 
         logging.info(f"Looking for stale tickets.")
@@ -141,3 +145,23 @@ class FlinkJiraRule:
                     f"Found https://issues.apache.org/jira/browse/{key}, but is has recently updated Subtasks. "
                     f"Ignoring for now."
                 )
+
+    def handle_tickets_marked_stale(self, jql_query):
+        logging.info(f"Looking for ticket previously marked as {self.warning_label}.")
+        issues = self.get_issues(jql_query)
+
+        for issue in issues:
+            key = issue["key"]
+            logging.info(
+                f"Found https://issues.apache.org/jira/browse/{key}. It is now processed as stale."
+            )
+
+            formatted_comment = self.done_comment.format(
+                warning_days=self.warning_days,
+                warning_label=self.warning_label,
+                done_label=self.done_label,
+            )
+
+            self.add_comment(key, formatted_comment)
+            self.replace_label(issue, self.warning_label, self.done_label)
+            self.handle_stale_ticket(key)
