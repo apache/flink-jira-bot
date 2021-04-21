@@ -113,3 +113,31 @@ class FlinkJiraRule:
     @abc.abstractmethod
     def run(self):
         return
+
+    def mark_stale_tickets_stale(self, jql_query):
+
+        logging.info(f"Looking for stale tickets.")
+        issues = self.get_issues(jql_query)
+
+        for issue in issues:
+            key = issue["key"]
+            issue = self.jira_client.get_issue(key)
+
+            if not self.has_recently_updated_subtask(key, self.stale_days):
+                logging.info(
+                    f"Found https://issues.apache.org/jira/browse/{key}. It is marked stale now."
+                )
+                formatted_comment = self.warning_comment.format(
+                    stale_days=self.stale_days,
+                    warning_days=self.warning_days,
+                    warning_label=self.warning_label,
+                )
+
+                self.add_label(issue, self.warning_label)
+                self.add_comment(key, formatted_comment)
+
+            else:
+                logging.info(
+                    f"Found https://issues.apache.org/jira/browse/{key}, but is has recently updated Subtasks. "
+                    f"Ignoring for now."
+                )

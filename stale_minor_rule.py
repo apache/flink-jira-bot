@@ -33,7 +33,10 @@ class StaleMinorRule(FlinkJiraRule):
 
     def run(self):
         self.close_tickets_marked_stale()
-        self.mark_stale_tickets_stale()
+        self.mark_stale_tickets_stale(
+            f"project = FLINK AND Priority = Minor AND resolution = Unresolved "
+            f"AND updated < startOfDay(-{self.stale_days}d)"
+        )
 
     def close_tickets_marked_stale(self):
 
@@ -61,35 +64,3 @@ class StaleMinorRule(FlinkJiraRule):
             self.add_comment(key, formatted_comment)
             self.replace_label(issue, self.warning_label, self.done_label)
             self.close_issue(key)
-
-    def mark_stale_tickets_stale(self):
-
-        stale_minor_tickets = (
-            f"project = FLINK AND Priority = Minor AND resolution = Unresolved AND updated < "
-            f"startOfDay(-{self.stale_days}d)"
-        )
-        logging.info(f"Looking for minor tickets, which are stale.")
-        issues = self.get_issues(stale_minor_tickets)
-
-        for issue in issues:
-            key = issue["key"]
-            issue = self.jira_client.get_issue(key)
-
-            if not self.has_recently_updated_subtask(key, self.stale_days):
-                logging.info(
-                    f"Found https://issues.apache.org/jira/browse/{key}. It is marked stale now."
-                )
-                formatted_comment = self.warning_comment.format(
-                    stale_days=self.stale_days,
-                    warning_days=self.warning_days,
-                    warning_label=self.warning_label,
-                )
-
-                self.add_label(issue, self.warning_label)
-                self.add_comment(key, formatted_comment)
-
-            else:
-                logging.info(
-                    f"Found https://issues.apache.org/jira/browse/{key}, but is has recently updated Subtasks. "
-                    f"Ignoring for now."
-                )
