@@ -30,12 +30,6 @@ class StaleMinorRule(FlinkJiraRule):
 
     def __init__(self, jira_client, config, is_dry_run):
         super().__init__(jira_client, config, is_dry_run)
-        self.stale_days = config["stale_minor"]["stale_days"].get()
-        self.warning_days = config["stale_minor"]["warning_days"].get()
-        self.warning_label = config["stale_minor"]["warning_label"].get()
-        self.done_label = config["stale_minor"]["done_label"].get()
-        self.done_comment = config["stale_minor"]["done_comment"].get()
-        self.warning_comment = config["stale_minor"]["warning_comment"].get()
 
     def run(self):
         self.close_tickets_marked_stale()

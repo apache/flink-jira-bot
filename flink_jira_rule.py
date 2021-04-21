@@ -25,8 +25,13 @@ class FlinkJiraRule:
 
     def __init__(self, jira_client, config, is_dry_run):
         self.jira_client = jira_client
-        self.config = config
         self.is_dry_run = is_dry_run
+        self.stale_days = config["stale_days"].get()
+        self.warning_days = config["warning_days"].get()
+        self.warning_label = config["warning_label"].get()
+        self.done_label = config["done_label"].get()
+        self.done_comment = config["done_comment"].get()
+        self.warning_comment = config["warning_comment"].get()
 
     def get_issues(self, jql_query):
         """Queries the JIRA PI for all issues that match the given JQL Query

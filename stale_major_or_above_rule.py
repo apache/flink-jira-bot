@@ -33,14 +33,6 @@ class StaleMajorOrAboveRule(FlinkJiraRule):
 
     def __init__(self, jira_client, config, is_dry_run, priority):
         super().__init__(jira_client, config, is_dry_run)
-        self.stale_days = config[f"stale_{priority.lower()}"]["stale_days"].get()
-        self.warning_days = config[f"stale_{priority.lower()}"]["warning_days"].get()
-        self.warning_label = config[f"stale_{priority.lower()}"]["warning_label"].get()
-        self.done_label = config[f"stale_{priority.lower()}"]["done_label"].get()
-        self.done_comment = config[f"stale_{priority.lower()}"]["done_comment"].get()
-        self.warning_comment = config[f"stale_{priority.lower()}"][
-            "warning_comment"
-        ].get()
         self.priority = priority
 
     LOWER_PRIORITIES = {"Blocker": "Critical", "Critical": "Major", "Major": "Minor"}
@@ -78,8 +70,10 @@ class StaleMajorOrAboveRule(FlinkJiraRule):
 
     def mark_stale_tickets_stale(self):
 
-        stale_tickets = f"project=FLINK AND priority = {self.priority} AND resolution = Unresolved AND assignee is " \
-                        f"empty AND updated < startOfDay(-{self.stale_days}d)"
+        stale_tickets = (
+            f"project=FLINK AND priority = {self.priority} AND resolution = Unresolved AND assignee is "
+            f"empty AND updated < startOfDay(-{self.stale_days}d)"
+        )
         logging.info(f"Looking for {self.priority} tickets, which are stale.")
         issues = self.get_issues(stale_tickets)
 

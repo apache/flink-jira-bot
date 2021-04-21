@@ -62,16 +62,18 @@ if __name__ == "__main__":
         password=os.environ["JIRA_PASSWORD"],
     )
 
-    stale_assigned_rule = StaleAssignedRule(jira, jira_bot_config, args.dryrun)
-    stale_minor_rule = StaleMinorRule(jira, jira_bot_config, args.dryrun)
+    stale_assigned_rule = StaleAssignedRule(
+        jira, jira_bot_config["stale_assigned"], args.dryrun
+    )
+    stale_minor_rule = StaleMinorRule(jira, jira_bot_config["stale_minor"], args.dryrun)
     stale_major_rule = StaleMajorOrAboveRule(
-        jira, jira_bot_config, args.dryrun, "Major"
+        jira, jira_bot_config["stale_major"], args.dryrun, "Major"
     )
     stale_critical_rule = StaleMajorOrAboveRule(
-        jira, jira_bot_config, args.dryrun, "Critical"
+        jira, jira_bot_config["stale_critical"], args.dryrun, "Critical"
     )
     stale_blocker_rule = StaleMajorOrAboveRule(
-        jira, jira_bot_config, args.dryrun, "Blocker"
+        jira, jira_bot_config["stale_blocker"], args.dryrun, "Blocker"
     )
     stale_assigned_rule.run()
     stale_minor_rule.run()
