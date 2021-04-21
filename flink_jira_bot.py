@@ -91,7 +91,9 @@ class FlinkJiraRule:
 
     def close_issue(self, key):
         if not self.is_dry_run:
-            self.jira_client.issue_transition(key, "Closed")
+            self.jira_client.set_issue_status(
+                key, "Closed", fields={"resolution": {"name": "Auto Closed"}}
+            )
         else:
             logging.info(f"DRY_RUN (({key})): Closing.")
 
@@ -112,7 +114,7 @@ class Rule3(FlinkJiraRule):
     {stale_minor.warning_days} with a comment that encourages users to watch, comment and simply reopen with a higher
     priority if the problem insists.
     """
-    
+
     def __init__(self, jira_client, config, is_dry_run):
         super().__init__(jira_client, config, is_dry_run)
         self.stale_days = config["stale_minor"]["stale_days"].get()
