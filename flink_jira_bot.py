@@ -67,13 +67,13 @@ if __name__ == "__main__":
     )
     stale_minor_rule = StaleMinorRule(jira, jira_bot_config["stale_minor"], args.dryrun)
     stale_major_rule = StaleMajorOrAboveRule(
-        jira, jira_bot_config["stale_major"], args.dryrun, "Major"
+        jira, jira_bot_config["stale_major"], args.dryrun, "Major", "Minor"
     )
     stale_critical_rule = StaleMajorOrAboveRule(
-        jira, jira_bot_config["stale_critical"], args.dryrun, "Critical"
+        jira, jira_bot_config["stale_critical"], args.dryrun, "Critical", "Major"
     )
     stale_blocker_rule = StaleMajorOrAboveRule(
-        jira, jira_bot_config["stale_blocker"], args.dryrun, "Blocker"
+        jira, jira_bot_config["stale_blocker"], args.dryrun, "Blocker", "Critical"
     )
     stale_assigned_rule.run()
     stale_minor_rule.run()

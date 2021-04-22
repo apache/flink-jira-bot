@@ -16,8 +16,6 @@
 # limitations under the License.
 ################################################################################
 
-import logging
-
 from flink_jira_rule import FlinkJiraRule
 
 
@@ -31,11 +29,10 @@ class StaleMajorOrAboveRule(FlinkJiraRule):
     The time periods before warning differ based on the priority:
     """
 
-    def __init__(self, jira_client, config, is_dry_run, priority):
+    def __init__(self, jira_client, config, is_dry_run, priority, lower_priority):
         super().__init__(jira_client, config, is_dry_run)
+        self.lower_priority = lower_priority
         self.priority = priority
-
-    LOWER_PRIORITIES = {"Blocker": "Critical", "Critical": "Major", "Major": "Minor"}
 
     def run(self):
         self.handle_tickets_marked_stale(
@@ -49,4 +46,4 @@ class StaleMajorOrAboveRule(FlinkJiraRule):
         )
 
     def handle_stale_ticket(self, key):
-        self.set_priority(key, self.LOWER_PRIORITIES[self.priority])
+        self.set_priority(key, self.lower_priority)
