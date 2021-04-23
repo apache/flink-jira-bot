@@ -17,7 +17,7 @@
 ################################################################################
 
 stale_assigned:
-    stale_days: 7
+    stale_days: 14
     warning_days: 7
     warning_label: "stale-assigned"
     warning_comment: 'This issue is assigned but has not received an update in {stale_days} days so it has been labeled "{warning_label}". If you are still working on the issue, please give an update and remove the label. If you are no longer working on the issue, please unassign so someone else may work on it. In {warning_days} days the issue will be automatically unassigned.'
