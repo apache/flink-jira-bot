@@ -20,38 +20,55 @@ stale_assigned:
     stale_days: 14
     warning_days: 7
     warning_label: "stale-assigned"
-    warning_comment: 'This issue is assigned but has not received an update in {stale_days} days so it has been labeled "{warning_label}". If you are still working on the issue or are waiting for feedback from a Committer, please remove the label and optionally provide an update. If you are waiting for feedback, please consider this a reminder *to Committers/Reviewer* to get back to you. If you are no longer working on the issue, please unassign yourself so someone else may work on it. In {warning_days} days the issue will be automatically unassigned.'
     done_label: "auto-unassigned"
-    done_comment: 'This issue was marked "{warning_label}" and has not received an update in {warning_days} days. It is now automatically unassigned. If you are still working on it, you can assign it to yourself again. Please also give an update about the status of the work.'
+    warning_comment: |
+        I am the [Flink Jira Bot|https://github.com/apache/flink-jira-bot/] and I help the community manage its development. I see this issue is assigned but has not received an update in {stale_days}, so it has been labeled "{warning_label}".
+        If you are still working on the issue, please remove the label and add a comment updating the community on your progress.  If this issue is waiting on feedback, please consider this a reminder to the committer/reviewer. Flink is a very active project, and so we appreciate your patience.
+        If you are no longer working on the issue, please unassign yourself so someone else may work on it. If the "warning_label" label is not removed in {warning_days} days, the issue will be automatically unassigned.
+
+    done_comment: |
+        This issue was marked "{warning_label}" {warning_days} ago and has not received an update. I have automatically removed the current assignee from the issue so others in the community may pick it up. If you are still working on this ticket, please ask a committer to reassign you and provide an update about your current status.
 
 stale_minor:
     stale_days: 180
     warning_days: 7
     warning_label: "stale-minor"
-    warning_comment: 'This issue and all of its Sub-Tasks have not been updated for {stale_days} days. So, it has been labeled "{warning_label}". If you are still affected by this bug or are still interested in this issue, please give an update and remove the label. In {warning_days} days the issue will be closed automatically.'
     done_label: "auto-closed"
-    done_comment: 'This issue has been labeled "{warning_label}" for {warning_days} days. It is closed now. If you are still affected by this or would like to raise the priority of this ticket please re-open, removing the label "{done_label}" and raise the ticket priority accordingly.'
+    warning_comment: |
+        I am the [Flink Jira Bot|https://github.com/apache/flink-jira-bot/] and I help the community manage its development. I noticed that neither this issue nor its subtasks had updates for {state_days} days, so I labeled it "{warning_label}".  If you are still affected by this bug or are still interested in this issue, please update and remove the label.
+
+    done_comment: |
+        This issue was labeled "{warning_label}" {warning_days} ago and has not received any updates so I have gone ahead and closed it.  If you are still affected by this or would like to raise the priority of this ticket please re-open, removing the label "{done_label}" and raise the ticket priority accordingly.
 
 stale_blocker:
     stale_days: 1
     warning_days: 7
     warning_label: "stale-blocker"
-    warning_comment: 'This Blockers is unassigned and itself and all of its Sub-Tasks have not been updated for {stale_days} days. So, it has been labeled "{warning_label}". If this ticket is a Blocker, please either assign yourself or give an update. Afterwards, please remove the label. In {warning_days} days the issue will be deprioritized.'
     done_label: "auto-deprioritized-blocker"
-    done_comment: 'This issue has been labeled "{warning_label}" for {warning_days} days. It is deprioritized now. If this ticket is actually a Blocker, please raise the ticket priority again and assign yourself or revive the public discussion.'
+    warning_comment: |
+        I am the [Flink Jira Bot|https://github.com/apache/flink-jira-bot/] and I help the community manage its development. I see this issues has been marked as a Blocker but is unassigned and neither itself nor its Sub-Tasks have been updated for {stale_days} days. I have gone ahead and marked it "{warning_label}". If this ticket is a Blocker, please either assign yourself or give an update. Afterwards, please remove the label or in {warning_days} days the issue will be deprioritized.
+
+    done_comment: |
+        This issue was labeled "{warning_label}" {warning_days} ago and has not received any updates so it is being deprioritized. If this ticket is actually a Blocker, please raise the priority and ask a committer to assign you the issue or revive the public discussion.
 
 stale_critical:
     stale_days: 7
     warning_days: 7
     warning_label: "stale-critical"
-    warning_comment: 'This critical issue is unassigned and itself and all of its Sub-Tasks have not been updated for {stale_days} days. So, it has been labeled "{warning_label}". If this ticket is indeed critical, please either assign yourself or give an update. Afterwards, please remove the label. In {warning_days} days the issue will be deprioritized.'
     done_label: "auto-deprioritized-critical"
-    done_comment: 'This issue has been labeled "{warning_label}" for {warning_days} days. It is deprioritized now. If this ticket is actually critical, please raise the ticket priority again and assign yourself or revive the public discussion.'
+    warning_comment: |
+        I am the [Flink Jira Bot|https://github.com/apache/flink-jira-bot/] and I help the community manage its development. I see this issues has been marked as Critical but is unassigned and neither itself nor its Sub-Tasks have been updated for {stale_days} days. I have gone ahead and marked it "{warning_label}". If this ticket is critical, please either assign yourself or give an update. Afterwards, please remove the label or in {warning_days} days the issue will be deprioritized.
+
+    done_comment: |
+        This issue was labeled "{warning_label}" {warning_days} ago and has not received any updates so it is being deprioritized. If this ticket is actually Critical, please raise the priority and ask a committer to assign you the issue or revive the public discussion.
 
 stale_major:
     stale_days: 30
     warning_days: 7
     warning_label: "stale-major"
-    warning_comment: 'This major issue is unassigned and itself and all of its Sub-Tasks have not been updated for {stale_days} days. So, it has been labeled "{warning_label}". If this ticket is indeed "major", please either assign yourself or give an update. Afterwards, please remove the label. In {warning_days} days the issue will be deprioritized.'
     done_label: "auto-deprioritized-major"
-    done_comment: 'This issue has been labeled "{warning_label}" for {warning_days} days. It is deprioritized now. If this ticket is actually "major", please raise the ticket priority again and assign yourself or revive the public discussion.'
+    warning_comment: |
+        I am the [Flink Jira Bot|https://github.com/apache/flink-jira-bot/] and I help the community manage its development. I see this issues has been marked as Major but is unassigned and neither itself nor its Sub-Tasks have been updated for {stale_days} days. I have gone ahead and added a "{warning_label}" to the issue". If this ticket is a Major, please either assign yourself or give an update. Afterwards, please remove the label or in {warning_days} days the issue will be deprioritized.
+
+done_comment: |
+    This issue was labeled "{warning_label}" {warning_days} ago and has not received any updates so it is being deprioritized. If this ticket is actually Major, please raise the priority and ask a committer to assign you the issue or revive the public discussion.
