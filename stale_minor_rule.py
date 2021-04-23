@@ -38,8 +38,8 @@ class StaleMinorRule(FlinkJiraRule):
             f"AND updated < startOfDay(-{self.warning_days}d)"
         )
         self.mark_stale_tickets_stale(
-            f"project = FLINK AND Priority = Minor AND resolution = Unresolved "
-            f"AND updated < startOfDay(-{self.stale_days}d)"
+            f'project = FLINK AND type != "Sub-Task" AND Priority = Minor AND resolution = Unresolved '
+            f'AND updated < startOfDay(-{self.stale_days}d)'
         )
 
     def handle_stale_ticket(self, key):
