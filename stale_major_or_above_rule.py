@@ -41,8 +41,8 @@ class StaleMajorOrAboveRule(FlinkJiraRule):
             f"AND updated < startOfDay(-{self.warning_days}d)"
         )
         self.mark_stale_tickets_stale(
-            f"project=FLINK AND priority = {self.priority} AND resolution = Unresolved "
-            f"AND assignee is empty AND updated < startOfDay(-{self.stale_days}d)"
+            f'project=FLINK AND type != "Sub-Task" AND priority = {self.priority} AND resolution = Unresolved '
+            f'AND assignee is empty AND updated < startOfDay(-{self.stale_days}d)'
         )
 
     def handle_stale_ticket(self, key):
