@@ -1,6 +1,6 @@
 # Apache Flink Jira Bot
 
-The Flink Jira enforces some of the rules outlined in [the Apache Flink Confluence](https://cwiki.apache.org/confluence/display/FLINK/Flink+Jira+Process).
+The Flink Jira Bot partially enforces the Apache Flink Jira process. Please see [Apache Flink Jira Process](https://cwiki.apache.org/confluence/display/FLINK/Flink+Jira+Process) for all the guidlines and conventions that we try to follow.
 
 ## Usage
 
@@ -59,4 +59,5 @@ An unresolved Minor ticket without an update for {stale_minor.stale_days} is clo
 
 Apache Flink is an open source project of The Apache Software Foundation (ASF).
 
-Flink is distributed data processing framework with powerful stream and batch processing capabilities. Learn more about Flink at http://flink.apache.org/
+Flink is a distributed data processing framework with powerful stream and batch processing capabilities. Learn more about Flink at http://flink.apache.org/
+
