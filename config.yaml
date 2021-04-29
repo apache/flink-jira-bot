@@ -70,5 +70,5 @@ stale_major:
     warning_comment: |
         I am the [Flink Jira Bot|https://github.com/apache/flink-jira-bot/] and I help the community manage its development. I see this issues has been marked as Major but is unassigned and neither itself nor its Sub-Tasks have been updated for {stale_days} days. I have gone ahead and added a "{warning_label}" to the issue". If this ticket is a Major, please either assign yourself or give an update. Afterwards, please remove the label or in {warning_days} days the issue will be deprioritized.
 
-done_comment: |
-    This issue was labeled "{warning_label}" {warning_days} ago and has not received any updates so it is being deprioritized. If this ticket is actually Major, please raise the priority and ask a committer to assign you the issue or revive the public discussion.
+    done_comment: |
+        This issue was labeled "{warning_label}" {warning_days} ago and has not received any updates so it is being deprioritized. If this ticket is actually Major, please raise the priority and ask a committer to assign you the issue or revive the public discussion.
