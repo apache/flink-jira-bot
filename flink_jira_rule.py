@@ -100,6 +100,7 @@ class FlinkJiraRule:
     def unassign(self, key):
         if not self.is_dry_run:
             self.jira_client.assign_issue(key, None)
+            self.jira_client.set_issue_status(key, "Open")
         else:
             logging.info(f"DRY_RUN (({key})): Unassigning.")
 
