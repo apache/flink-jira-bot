@@ -32,8 +32,9 @@ class FlinkJiraRule:
         self.done_label = config["done_label"].get()
         self.done_comment = config["done_comment"].get()
         self.warning_comment = config["warning_comment"].get()
+        self.ticket_limit = config["ticket_limit"].get()
 
-    def get_issues(self, jql_query):
+    def get_issues(self, jql_query, limit):
         """Queries the JIRA PI for all issues that match the given JQL Query
 
         This method is necessary as requests tend to time out if the number of results reaches a certain number.
@@ -41,23 +42,23 @@ class FlinkJiraRule:
         :param jql_query: the search query
         :return: a list of issues matching the query
         """
-        limit = 200
+        limit_per_api_request = min(100, limit)
         current = 0
         total = 1
         issues = []
-        while current < total:
-            response = self.jira_client.jql(jql_query, limit=limit, start=current)
+        while current < min(total, limit):
+            response = self.jira_client.jql(jql_query, limit=limit_per_api_request, start=current)
             total = response["total"]
             issues = issues + response["issues"]
             current = len(issues)
         logging.info(f'"{jql_query}" returned {len(issues)} issues')
-        return issues
+        return issues[:min(limit, len(issues))]
 
     def has_recently_updated_subtask(self, parent, updated_within_days):
         find_subtasks_updated_within = (
             f"parent = {parent}  AND updated > startOfDay(-{updated_within_days}d)"
         )
-        issues = self.get_issues(find_subtasks_updated_within)
+        issues = self.get_issues(find_subtasks_updated_within, 1)
         return len(issues) > 0
 
     def add_label_with_comment(self, key, label, comment):
@@ -80,7 +81,7 @@ class FlinkJiraRule:
     def mark_stale_tickets_stale(self, jql_query):
 
         logging.info(f"Looking for stale tickets.")
-        issues = self.get_issues(jql_query)
+        issues = self.get_issues(jql_query, self.ticket_limit)
 
         for issue in issues:
             key = issue["key"]
@@ -106,7 +107,7 @@ class FlinkJiraRule:
 
     def handle_tickets_marked_stale(self, jql_query):
         logging.info(f"Looking for ticket previously marked as {self.warning_label}.")
-        issues = self.get_issues(jql_query)
+        issues = self.get_issues(jql_query, self.ticket_limit)
 
         for issue in issues:
             key = issue["key"]
