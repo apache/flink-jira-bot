@@ -17,6 +17,7 @@
 ################################################################################
 
 from flink_jira_rule import FlinkJiraRule
+import logging
 
 
 class StaleMajorOrAboveRule(FlinkJiraRule):
@@ -42,8 +43,21 @@ class StaleMajorOrAboveRule(FlinkJiraRule):
         )
         self.mark_stale_tickets_stale(
             f'project=FLINK AND type != "Sub-Task" AND priority = {self.priority} AND resolution = Unresolved '
-            f'AND assignee is empty AND updated < startOfDay(-{self.stale_days}d)'
+            f"AND assignee is empty AND updated < startOfDay(-{self.stale_days}d)"
         )
 
-    def handle_stale_ticket(self, key):
-        self.set_priority(key, self.lower_priority)
+    def handle_stale_ticket(self, key, warning_label, done_label, comment):
+        self.set_priority(key, warning_label, done_label, self.lower_priority, comment)
+
+    def set_priority(self, key, warning_label, done_label, priority, comment):
+        if not self.is_dry_run:
+            self.jira_client.edit_issue(
+                key,
+                {
+                    "labels": [{"add": done_label}, {"remove": warning_label}],
+                    "comment": [{"add": {"body": comment}}],
+                    "priority": [{"set": {"name": priority}}],
+                },
+            )
+        else:
+            logging.info(f"DRY_RUN (({key})): Setting to {priority}")

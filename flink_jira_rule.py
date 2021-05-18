@@ -60,58 +60,14 @@ class FlinkJiraRule:
         issues = self.get_issues(find_subtasks_updated_within)
         return len(issues) > 0
 
-    def add_label(self, issue, label):
-        labels = issue["fields"]["labels"] + [label]
-        fields = {"labels": labels}
-        key = issue["key"]
-
+    def add_label_with_comment(self, key, label, comment):
         if not self.is_dry_run:
-            self.jira_client.update_issue_field(key, fields)
+            self.jira_client.edit_issue(
+                key,
+                {"labels": [{"add": label}], "comment": [{"add": {"body": comment}}]},
+            )
         else:
             logging.info(f'DRY RUN ({key}): Adding label "{label}".')
-
-    def replace_label(self, issue, old_label, new_label):
-        labels = issue["fields"]["labels"] + [new_label]
-        labels.remove(old_label)
-        fields = {"labels": labels}
-        key = issue["key"]
-
-        if not self.is_dry_run:
-            self.jira_client.update_issue_field(key, fields)
-        else:
-            logging.info(
-                f'DRY RUN ({key}): Replace label "{old_label}" for "{new_label}".'
-            )
-
-    def add_comment(self, key, comment):
-        if not self.is_dry_run:
-            self.jira_client.issue_add_comment(key, comment)
-        else:
-            logging.info(f'DRY_RUN ({key}): Adding comment "{comment}".')
-
-    def close_issue(self, key):
-        if not self.is_dry_run:
-            self.jira_client.set_issue_status(
-                key, "Closed", fields={"resolution": {"name": "Auto Closed"}}
-            )
-        else:
-            logging.info(f"DRY_RUN (({key})): Closing.")
-
-    def unassign(self, key):
-        if not self.is_dry_run:
-            if self.jira_client.get_issue_status(key) == "In Progress":
-                self.jira_client.assign_issue(key, self.jira_client.username)
-                self.jira_client.set_issue_status(key, "Open")
-            self.jira_client.assign_issue(key, None)
-        else:
-            logging.info(f"DRY_RUN (({key})): Unassigning.")
-
-    def set_priority(self, key, priority):
-        if not self.is_dry_run:
-            fields = {"priority": {"name": priority}}
-            self.jira_client.update_issue_field(key, fields)
-        else:
-            logging.info(f"DRY_RUN (({key})): Setting to {priority}")
 
     @abc.abstractmethod
     def run(self):
@@ -140,12 +96,11 @@ class FlinkJiraRule:
                     warning_label=self.warning_label,
                 )
 
-                self.add_label(issue, self.warning_label)
-                self.add_comment(key, formatted_comment)
+                self.add_label_with_comment(key, self.warning_label, formatted_comment)
 
             else:
                 logging.info(
-                    f"Found https://issues.apache.org/jira/browse/{key}, but is has recently updated Subtasks. "
+                    f"Found https://issues.apache.org/jira/browse/{key}, but is has recently updated Subtasks."
                     f"Ignoring for now."
                 )
 
@@ -165,6 +120,6 @@ class FlinkJiraRule:
                 done_label=self.done_label,
             )
 
-            self.add_comment(key, formatted_comment)
-            self.replace_label(issue, self.warning_label, self.done_label)
-            self.handle_stale_ticket(key)
+            self.handle_stale_ticket(
+                key, self.warning_label, self.done_label, formatted_comment
+            )
