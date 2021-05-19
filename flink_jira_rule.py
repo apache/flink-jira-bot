@@ -40,6 +40,7 @@ class FlinkJiraRule:
         This method is necessary as requests tend to time out if the number of results reaches a certain number.
         So, this method requests the results in multiple queries and returns a final list of all issues.
         :param jql_query: the search query
+        :param limit: the maximum number of issues that should returned
         :return: a list of issues matching the query
         """
         limit_per_api_request = min(100, limit)
