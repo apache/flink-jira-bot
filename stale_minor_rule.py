@@ -39,8 +39,24 @@ class StaleMinorRule(FlinkJiraRule):
         )
         self.mark_stale_tickets_stale(
             f'project = FLINK AND type != "Sub-Task" AND Priority = Minor AND resolution = Unresolved '
-            f'AND updated < startOfDay(-{self.stale_days}d)'
+            f"AND updated < startOfDay(-{self.stale_days}d)"
         )
 
-    def handle_stale_ticket(self, key):
-        self.close_issue(key)
+    def handle_stale_ticket(self, key, warning_label, done_label, comment):
+        self.close_issue(key, warning_label, done_label, comment)
+
+    def close_issue(self, key, warning_label, done_label, comment):
+        if not self.is_dry_run:
+            self.jira_client.edit_issue(
+                key,
+                {"labels": [{"add": done_label}, {"remove": warning_label}]},
+                notify_users=False,
+            )
+            self.jira_client.set_issue_status(
+                key,
+                "Closed",
+                fields={"resolution": {"name": "Auto Closed"}},
+                update={"comment": [{"add": {"body": comment}}]},
+            )
+        else:
+            logging.info(f"DRY_RUN (({key})): Closing.")
