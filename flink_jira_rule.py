@@ -86,7 +86,6 @@ class FlinkJiraRule:
 
         for issue in issues:
             key = issue["key"]
-            issue = self.jira_client.get_issue(key)
 
             if not self.has_recently_updated_subtask(key, self.stale_days):
                 logging.info(
