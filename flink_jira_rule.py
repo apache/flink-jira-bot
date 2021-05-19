@@ -40,6 +40,7 @@ class FlinkJiraRule:
         This method is necessary as requests tend to time out if the number of results reaches a certain number.
         So, this method requests the results in multiple queries and returns a final list of all issues.
         :param jql_query: the search query
+        :param limit: the maximum number of issues that should returned
         :return: a list of issues matching the query
         """
         limit_per_api_request = min(100, limit)
@@ -75,7 +76,7 @@ class FlinkJiraRule:
         return
 
     @abc.abstractmethod
-    def handle_stale_ticket(self, key):
+    def handle_stale_ticket(self, key, warning_label, done_label, comment):
         return
 
     def mark_stale_tickets_stale(self, jql_query):
@@ -85,7 +86,6 @@ class FlinkJiraRule:
 
         for issue in issues:
             key = issue["key"]
-            issue = self.jira_client.get_issue(key)
 
             if not self.has_recently_updated_subtask(key, self.stale_days):
                 logging.info(
