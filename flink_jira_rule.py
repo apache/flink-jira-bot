@@ -76,7 +76,7 @@ class FlinkJiraRule:
         return
 
     @abc.abstractmethod
-    def handle_stale_ticket(self, key):
+    def handle_stale_ticket(self, key, warning_label, done_label, comment):
         return
 
     def mark_stale_tickets_stale(self, jql_query):
