@@ -34,7 +34,7 @@ class FlinkJiraRule:
         self.warning_comment = config["warning_comment"].get()
         self.ticket_limit = config["ticket_limit"].get()
 
-    def get_issues(self, jql_query, limit):
+    def get_issues(self, jql_query, limit=10000):
         """Queries the JIRA PI for all issues that match the given JQL Query
 
         This method is necessary as requests tend to time out if the number of results reaches a certain number.
@@ -82,9 +82,12 @@ class FlinkJiraRule:
     def mark_stale_tickets_stale(self, jql_query):
 
         logging.info(f"Looking for stale tickets.")
-        issues = self.get_issues(jql_query, self.ticket_limit)
+        issues = self.get_issues(jql_query)
 
-        for issue in issues:
+        updated_issues_counter = 0
+        i = 0
+        while i < len(issues) and updated_issues_counter <= self.ticket_limit:
+            issue = issues[i]
             key = issue["key"]
 
             if not self.has_recently_updated_subtask(key, self.stale_days):
@@ -99,11 +102,14 @@ class FlinkJiraRule:
 
                 self.add_label_with_comment(key, self.warning_label, formatted_comment)
 
+                updated_issues_counter += 1
+
             else:
                 logging.info(
                     f"Found https://issues.apache.org/jira/browse/{key}, but is has recently updated Subtasks."
                     f"Ignoring for now."
                 )
+            i += 1
 
     def handle_tickets_marked_stale(self, jql_query):
         logging.info(f"Looking for ticket previously marked as {self.warning_label}.")
