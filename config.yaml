@@ -23,12 +23,12 @@ stale_assigned:
     warning_label: "stale-assigned"
     done_label: "auto-unassigned"
     warning_comment: |
-        I am the [Flink Jira Bot|https://github.com/apache/flink-jira-bot/] and I help the community manage its development. I see this issue is assigned but has not received an update in {stale_days}, so it has been labeled "{warning_label}".
+        I am the [Flink Jira Bot|https://github.com/apache/flink-jira-bot/] and I help the community manage its development. I see this issue is assigned but has not received an update in {stale_days} days, so it has been labeled "{warning_label}".
         If you are still working on the issue, please remove the label and add a comment updating the community on your progress.  If this issue is waiting on feedback, please consider this a reminder to the committer/reviewer. Flink is a very active project, and so we appreciate your patience.
         If you are no longer working on the issue, please unassign yourself so someone else may work on it. If the "warning_label" label is not removed in {warning_days} days, the issue will be automatically unassigned.
 
     done_comment: |
-        This issue was marked "{warning_label}" {warning_days} ago and has not received an update. I have automatically removed the current assignee from the issue so others in the community may pick it up. If you are still working on this ticket, please ask a committer to reassign you and provide an update about your current status.
+        This issue was marked "{warning_label}" {warning_days} days ago and has not received an update. I have automatically removed the current assignee from the issue so others in the community may pick it up. If you are still working on this ticket, please ask a committer to reassign you and provide an update about your current status.
 
 stale_minor:
     ticket_limit: 10
@@ -40,7 +40,7 @@ stale_minor:
         I am the [Flink Jira Bot|https://github.com/apache/flink-jira-bot/] and I help the community manage its development. I noticed that neither this issue nor its subtasks had updates for {stale_days} days, so I labeled it "{warning_label}".  If you are still affected by this bug or are still interested in this issue, please update and remove the label.
 
     done_comment: |
-        This issue was labeled "{warning_label}" {warning_days} ago and has not received any updates so I have gone ahead and closed it.  If you are still affected by this or would like to raise the priority of this ticket please re-open, removing the label "{done_label}" and raise the ticket priority accordingly.
+        This issue was labeled "{warning_label}" {warning_days} days ago and has not received any updates so I have gone ahead and closed it.  If you are still affected by this or would like to raise the priority of this ticket please re-open, removing the label "{done_label}" and raise the ticket priority accordingly.
 
 stale_blocker:
     ticket_limit: 5
@@ -52,7 +52,7 @@ stale_blocker:
         I am the [Flink Jira Bot|https://github.com/apache/flink-jira-bot/] and I help the community manage its development. I see this issues has been marked as a Blocker but is unassigned and neither itself nor its Sub-Tasks have been updated for {stale_days} days. I have gone ahead and marked it "{warning_label}". If this ticket is a Blocker, please either assign yourself or give an update. Afterwards, please remove the label or in {warning_days} days the issue will be deprioritized.
 
     done_comment: |
-        This issue was labeled "{warning_label}" {warning_days} ago and has not received any updates so it is being deprioritized. If this ticket is actually a Blocker, please raise the priority and ask a committer to assign you the issue or revive the public discussion.
+        This issue was labeled "{warning_label}" {warning_days} days ago and has not received any updates so it is being deprioritized. If this ticket is actually a Blocker, please raise the priority and ask a committer to assign you the issue or revive the public discussion.
 
 stale_critical:
     ticket_limit: 10
@@ -64,7 +64,7 @@ stale_critical:
         I am the [Flink Jira Bot|https://github.com/apache/flink-jira-bot/] and I help the community manage its development. I see this issues has been marked as Critical but is unassigned and neither itself nor its Sub-Tasks have been updated for {stale_days} days. I have gone ahead and marked it "{warning_label}". If this ticket is critical, please either assign yourself or give an update. Afterwards, please remove the label or in {warning_days} days the issue will be deprioritized.
 
     done_comment: |
-        This issue was labeled "{warning_label}" {warning_days} ago and has not received any updates so it is being deprioritized. If this ticket is actually Critical, please raise the priority and ask a committer to assign you the issue or revive the public discussion.
+        This issue was labeled "{warning_label}" {warning_days} days ago and has not received any updates so it is being deprioritized. If this ticket is actually Critical, please raise the priority and ask a committer to assign you the issue or revive the public discussion.
 
 stale_major:
     ticket_limit: 15
@@ -76,4 +76,4 @@ stale_major:
         I am the [Flink Jira Bot|https://github.com/apache/flink-jira-bot/] and I help the community manage its development. I see this issues has been marked as Major but is unassigned and neither itself nor its Sub-Tasks have been updated for {stale_days} days. I have gone ahead and added a "{warning_label}" to the issue". If this ticket is a Major, please either assign yourself or give an update. Afterwards, please remove the label or in {warning_days} days the issue will be deprioritized.
 
     done_comment: |
-        This issue was labeled "{warning_label}" {warning_days} ago and has not received any updates so it is being deprioritized. If this ticket is actually Major, please raise the priority and ask a committer to assign you the issue or revive the public discussion.
+        This issue was labeled "{warning_label}" {warning_days} days ago and has not received any updates so it is being deprioritized. If this ticket is actually Major, please raise the priority and ask a committer to assign you the issue or revive the public discussion.
