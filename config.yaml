@@ -18,7 +18,7 @@
 
 stale_assigned:
     ticket_limit: 10
-    stale_days: 14
+    stale_days: 30
     warning_days: 7
     warning_label: "stale-assigned"
     done_label: "auto-unassigned"
@@ -56,7 +56,7 @@ stale_blocker:
 
 stale_critical:
     ticket_limit: 10
-    stale_days: 7
+    stale_days: 14
     warning_days: 7
     warning_label: "stale-critical"
     done_label: "auto-deprioritized-critical"
@@ -68,7 +68,7 @@ stale_critical:
 
 stale_major:
     ticket_limit: 15
-    stale_days: 30
+    stale_days: 60
     warning_days: 7
     warning_label: "stale-major"
     done_label: "auto-deprioritized-major"
