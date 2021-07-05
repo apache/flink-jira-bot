@@ -48,12 +48,14 @@ class FlinkJiraRule:
         total = 1
         issues = []
         while current < min(total, limit):
-            response = self.jira_client.jql(jql_query, limit=limit_per_api_request, start=current)
+            response = self.jira_client.jql(
+                jql_query, limit=limit_per_api_request, start=current
+            )
             total = response["total"]
             issues = issues + response["issues"]
             current = len(issues)
         logging.info(f'"{jql_query}" returned {len(issues)} issues')
-        return issues[:min(limit, len(issues))]
+        return issues[: min(limit, len(issues))]
 
     def has_recently_updated_subtask(self, parent, updated_within_days):
         find_subtasks_updated_within = (
@@ -106,7 +108,7 @@ class FlinkJiraRule:
 
             else:
                 logging.info(
-                    f"Found https://issues.apache.org/jira/browse/{key}, but is has recently updated Subtasks."
+                    f"Found https://issues.apache.org/jira/browse/{key}, but is has recently updated Subtasks. "
                     f"Ignoring for now."
                 )
             i += 1

@@ -49,7 +49,7 @@ The time periods before warning differ based on the priority:
 
 ### Rule 2: Unassign Stale Assigned Tickets
 
-Assigned tickets without an update for {stale_assigned.stale_days} are unassigned after a warning period of {stale_assigned.warning_days}. Before this happens the assignee is notified that this is about to happen and asked for an update on the status of her contribution.
+Assigned tickets without an update for {stale_assigned.stale_days} days are marked stale. The assignee is notified and asked for an update on the status of her contribution.
 
 ### Rule 3: Close Stale Minor Tickets
 
