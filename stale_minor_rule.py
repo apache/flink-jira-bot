@@ -23,7 +23,7 @@ from flink_jira_rule import FlinkJiraRule
 
 class StaleMinorRule(FlinkJiraRule):
     """
-    An unresolved Minor ticket without an update for {stale_minor.stale_days} is closed after a warning period of
+    An unresolved Minor ticket without an update for {stale_minor.stale_days} or a fixVersion is closed after a warning period of
     {stale_minor.warning_days} with a comment that encourages users to watch, comment and simply reopen with a higher
     priority if the problem insists.
     """
@@ -39,7 +39,7 @@ class StaleMinorRule(FlinkJiraRule):
         )
         self.mark_stale_tickets_stale(
             f'project = FLINK AND type != "Sub-Task" AND Priority = Minor AND resolution = Unresolved '
-            f"AND updated < startOfDay(-{self.stale_days}d)"
+            f"AND updated < startOfDay(-{self.stale_days}d) AND fixVersion = null"
         )
 
     def handle_stale_ticket(self, key, warning_label, done_label, comment):
