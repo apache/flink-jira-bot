@@ -108,7 +108,7 @@ class FlinkJiraRule:
 
             else:
                 logging.info(
-                    f"Found https://issues.apache.org/jira/browse/{key}, but is has recently updated Subtasks."
+                    f"Found https://issues.apache.org/jira/browse/{key}, but is has recently updated Subtasks. "
                     f"Ignoring for now."
                 )
             i += 1
