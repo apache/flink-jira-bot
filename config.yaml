@@ -35,12 +35,12 @@ stale_minor:
     stale_days: 180
     warning_days: 7
     warning_label: "stale-minor"
-    done_label: "auto-closed"
+    done_label: "auto-deprioritized-minor"
     warning_comment: |
-        I am the [Flink Jira Bot|https://github.com/apache/flink-jira-bot/] and I help the community manage its development. I noticed that neither this issue nor its subtasks had updates for {stale_days} days, so I labeled it "{warning_label}".  If you are still affected by this bug or are still interested in this issue, please update and remove the label.
+        I am the [Flink Jira Bot|https://github.com/apache/flink-jira-bot/] and I help the community manage its development. I see this issues has been marked as Minor but is unassigned and neither itself nor its Sub-Tasks have been updated for {stale_days} days. I have gone ahead and marked it "{warning_label}". If this ticket is still Minor, please either assign yourself or give an update. Afterwards, please remove the label or in {warning_days} days the issue will be deprioritized.
 
     done_comment: |
-        This issue was labeled "{warning_label}" {warning_days} days ago and has not received any updates so I have gone ahead and closed it.  If you are still affected by this or would like to raise the priority of this ticket please re-open, removing the label "{done_label}" and raise the ticket priority accordingly.
+        This issue was labeled "{warning_label}" {warning_days} days ago and has not received any updates so it is being deprioritized. If this ticket is actually Minor, please raise the priority and ask a committer to assign you the issue or revive the public discussion.
 
 stale_blocker:
     ticket_limit: 5

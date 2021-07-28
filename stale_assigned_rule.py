@@ -16,8 +16,6 @@
 # limitations under the License.
 ################################################################################
 
-import logging
-
 from flink_jira_rule import FlinkJiraRule
 
 
