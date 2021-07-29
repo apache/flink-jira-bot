@@ -40,9 +40,9 @@ The configuration of the rules can be found in [config.yaml](config.yaml).
 
 ## About the Rules
 
-### Rule 1 Major+ Need Assignee or Discussion
+### Rule 1 Tickets Need an Assignee or Discussion Eventually
 
-Tickets major and above need an assignee, or an update within {stale_<blocker|critical|major>.stale_days}, otherwise the priority will be reduced after a warning period of {stale_<blocker|critical|major>.warning_days} days.
+Any ticket (except ones with priority "Not a Priority") needs an assignee, or an update within {stale_<blocker|critical|major|minor>.stale_days}, otherwise the priority will be reduced after a warning period of {stale_<blocker|critical|major>.warning_days} days.
 An update of a Sub-Task counts as an update to the ticket. 
 Before this happens the assignee/reporter/watchers are notified that the ticket is about to become stale and will be deprioritized. 
 The time periods before warning differ based on the priority: 
@@ -50,10 +50,6 @@ The time periods before warning differ based on the priority:
 ### Rule 2: Unassign Stale Assigned Tickets
 
 Assigned tickets without an update for {stale_assigned.stale_days} days are marked stale. The assignee is notified and asked for an update on the status of her contribution.
-
-### Rule 3: Close Stale Minor Tickets
-
-An unresolved Minor ticket without an update for {stale_minor.stale_days} is closed after a warning period of {stale_minor.warning_days} with a comment that encourages users to watch, comment and simply reopen with a higher priority if the problem insists.
 
 ## About Apache Flink
 

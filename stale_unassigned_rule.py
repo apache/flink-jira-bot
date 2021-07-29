@@ -20,14 +20,13 @@ from flink_jira_rule import FlinkJiraRule
 import logging
 
 
-class StaleMajorOrAboveRule(FlinkJiraRule):
+class StaleUnassignedRule(FlinkJiraRule):
     """
-    Tickets major and above without a fixVersion need an assignee, or an update within {stale_<blocker|critical|major>.stale_days},
+    Any ticket (except ones with priority "Not a Priority") needs an assignee, or an update within {stale_<blocker|critical|major|minor>.stale_days},
     otherwise the priority will be reduced after a warning period of {stale_<blocker|critical|major>.warning_days} days.
-    An update of on of the Sub-Tasks counts as an update to the ticket.
-    Before this happens the assignee/reporter/watchers are notified that the ticket is about to become stale and will
-    be deprioritized.
-    The time periods before warning differ based on the priority.
+    An update of a Sub-Task counts as an update to the ticket.
+    Before this happens the assignee/reporter/watchers are notified that the ticket is about to become stale and will be deprioritized.
+    The time periods before warning differ based on the priority:
     """
 
     def __init__(self, jira_client, config, is_dry_run, priority, lower_priority):
